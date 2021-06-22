@@ -5,6 +5,40 @@
     <p><button @click="doLogin" class="btn btn-primary">Login</button></p>
     <input v-model="selectedDate" type="text" ref="flatpickr" />
     <p class="bg-danger">SELECTED: {{ selectedDate }}</p>
+    <h3>Tabs</h3>
+    <ul
+      v-if="tabs.length > 0"
+      class="nav nav-pills mb-3"
+      id="pills-tab"
+      role="tablist"
+    >
+      <li
+        v-for="tab in tabs"
+        :key="tab.name"
+        class="nav-item"
+        role="presentation"
+      >
+        <button
+          class="nav-link"
+          v-on:click="activeTab = tab.name"
+          :class="{ active: activeTab === tab.name }"
+          :id="'pills-' + tab.name + '-tab'"
+          data-bs-toggle="pill"
+          v-bind:data-bs-target="'#pills-' + tab.name"
+          type="button"
+          role="tab"
+          v-bind:aria-controls="'pills-' + tab.name"
+          aria-selected="true"
+        >
+          {{ tab.title }}
+        </button>
+      </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+      <keep-alive>
+        <tab-content :tab-content="currentTabComponent" />
+      </keep-alive>
+    </div>
     <div class="row">
       <h1>VueJS Lifecycle</h1>
       <blockquote>
@@ -43,6 +77,39 @@
 // @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
 import flatpickr from "flatpickr";
+import Vue from "vue";
+
+const TabContent = Vue.component("tab-content", {
+  template: "<div>{{tabContent}}</div>",
+  props: ["tabContent"],
+  created: function () {
+    console.error("tab-content:created");
+  },
+  mounted: function () {
+    console.error("tab-content:mounted");
+  },
+  updated: function () {
+    console.error("tab-content:updated");
+  },
+  activated: function () {
+    console.error("tab-content:ACTIVATED .......");
+  },
+  deactivated: function () {
+    console.error("tab-content:DEACTIVATED .......");
+  },
+  destroyed: function () {
+    console.error("tab-content:DESTROYED .......");
+  },
+  watch: {
+    tabContent: function (current, prev) {
+      console.error(
+        "tab-content:tabContent",
+        `current:${current}`,
+        `prev:${prev}`
+      );
+    },
+  },
+});
 
 const exampleMixin = {
   created: function () {
@@ -61,6 +128,7 @@ const exampleMixin = {
 export default {
   name: "Home",
   components: {
+    TabContent,
     // HelloWorld,
   },
   mixins: [exampleMixin],
@@ -83,8 +151,8 @@ export default {
   },
   mounted() {
     console.log("mounted:", this.$el);
-    this.$el.classList.add("bg-light");
-    flatpickr(this.$refs["flatpickr"], {
+    // this.$el.classList.add("bg-light");
+    let theDayPicker = flatpickr(this.$refs["flatpickr"], {
       defaultDate: this.selectedDate,
       minDate: new Date(),
     });
@@ -92,11 +160,19 @@ export default {
     this.$nextTick(function () {
       console.error("Chac chan toan bo child components da duoc mount");
     });
+
+    // the right one should be
+    this.$once("hook:beforeDestroy", function () {
+      theDayPicker.destroy();
+    });
   },
   computed: {
     getUser() {
       const { user } = this.$store.state;
       return user ? user : this.user;
+    },
+    currentTabComponent() {
+      return this.tabs.filter((t) => t.name === this.activeTab)[0].content;
     },
   },
   watch: {
@@ -105,6 +181,20 @@ export default {
     },
   },
   beforeUpdate: function () {},
+  updated: function () {
+    this.$nextTick(function () {
+      // close loading
+      console.error("updated.........");
+    });
+  },
+  beforeDestroy: function () {
+    // not good
+    console.error("cleanup things");
+    // this.flatpickr.destroy();
+  },
+  destroyed: function () {
+    console.error("all destroyed: directives, event listeners, child");
+  },
   // state
   data() {
     console.log("1st");
@@ -112,6 +202,25 @@ export default {
       appName: process.env.VUE_APP_NAME,
       user: null,
       selectedDate: new Date(),
+      flatpickr: null,
+      tabs: [
+        {
+          name: "home",
+          title: "home",
+          content: "home content",
+        },
+        {
+          name: "about",
+          title: "about",
+          content: "about content",
+        },
+        {
+          name: "contact",
+          title: "contact",
+          content: "contact content",
+        },
+      ],
+      activeTab: "home",
       phases: [
         {
           name: "beforeCreate",
@@ -120,9 +229,10 @@ export default {
           cls: "bg-warning",
         },
         {
-          name: "created",
-          description:
-            "synchronously: Tại thời điểm có thể bắt đầu set state cho component. Và state cũng đang ở dạng Observer. Eg: this.$data",
+          name: "created(*)",
+          description: `synchronously: Tại thời điểm có thể bắt đầu set state cho component. Và state cũng đang ở dạng Observer. Eg: this.$data.
+             Use cases: call API, init web socket connection
+            `,
           meta: [],
           cls: "bg-warning",
         },
@@ -136,10 +246,10 @@ export default {
             Chú ý: SSR không tồn tại hook này
             `,
           meta: [],
-          cls: "bg-warning",
+          cls: "bg-success",
         },
         {
-          name: "mounted",
+          name: "mounted(*)",
           description: `Tại thời điểm có thể bắt đầu set state cho component. Và state cũng đang ở dạng Observer. Eg: this.$data.\n
             Tuy nhiên lúc này this.$ele ( DOM ) chưa tồn tại.
             Có 1 điểm thú vị là lúc này chưa chắc toàn bộ child components đã được mounted.
@@ -150,9 +260,46 @@ export default {
           cls: "bg-success",
         },
         {
+          name: "actived|deactivated",
+          description: `Dùng trong trường hợp liên quan tới keep-alive.
+          Ví dụ như tab content.
+            `,
+          meta: [],
+          cls: "bg-info",
+        },
+        {
           name: "beforeUpdate",
           description: `được gọi khi data(state) thay đổi trước khi DOM được cập nhật.
           Thời điểm thích hợp để remove các event listenrs manually.
+            `,
+          meta: [],
+          cls: "bg-primary",
+        },
+        {
+          name: "updated",
+          description: `được gọi khi data(state) thay đổi trước khi DOM được cập nhật.
+          Không nên thay đổi state trong hook. Để react với state sử dụng:
+          computed property và watcher thay thế. Lưu ý nên sử dụng nextTick để đảm bảo
+          entinre view đã được render
+            `,
+          meta: [],
+          cls: "bg-primary",
+        },
+        {
+          name: "beforeDestroy(*)",
+          description: `được gọi trước khi Vue instance bị destroy.
+          Thời điểm thích hợp để remove các instance tạo bởi third party lib.
+          Ví dụ: calendar các kiểu : flatpickr, Pikaday.
+            `,
+          meta: [],
+          cls: "bg-danger",
+        },
+        {
+          name: "destroyed",
+          description: `được gọi sau khi Vue instance bị destroy.
+          Bao gồm cả: directives, event listeners, child Vue instances.
+          Thời điểm thích hợp để hủy các event
+          onscroll, hay các sự kiện lắng nghe socket.io, larave-echo
             `,
           meta: [],
           cls: "bg-danger",
