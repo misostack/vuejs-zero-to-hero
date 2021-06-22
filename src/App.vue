@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">Today</router-link> |
+      <router-link to="/day1">Day1</router-link> |
       <router-link to="/about">About</router-link>
     </div>
     <router-view />
@@ -9,5 +10,5 @@
 </template>
 
 <style lang="scss">
-@import "styles/global.scss";
+@import 'styles/global.scss';
 </style>

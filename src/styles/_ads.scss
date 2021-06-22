@@ -1,0 +1,21 @@
+.ads {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  .ad_300x250 {
+    display: block;
+    width: 300px;
+    height: 250px;
+    // background: transparent url(../assets/images/content/ad_300x250_1.jpg)
+    //   no-repeat center center;
+  }
+  .ad_300x250:nth-child(3n + 1) {
+    background-image: url(~@/assets/images/content/ad_300x250_1.jpg);
+  }
+  .ad_300x250:nth-child(3n + 2) {
+    background-image: url(~@/assets/images/content/ad_300x250_2.jpg);
+  }
+  .ad_300x250:nth-child(3n + 3) {
+    background-image: url(~@/assets/images/content/ad_300x250_3.jpg);
+  }
+}

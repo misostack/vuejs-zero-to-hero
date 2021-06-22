@@ -52,18 +52,18 @@ cp .env.sample .env.production
 
 ### Part 3
 
-1. State Management with React Hooks
-2. State Management with Redux
-3. Forms & Validations
-4. PropTypes
-5. Events
+1. State Management with Vuex
+2. Forms & Validations
+3. PropTypes
+4. Events
+5. Model
 
 ### Part 4
 
 1. JSON Server
 2. API Service with axios
-3. Redux Fundamental
-4. Redux in real world
+3. Vuex Fundamental
+4. Vuex in real world
 
 ### Part 5
 
