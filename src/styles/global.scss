@@ -1,6 +1,8 @@
 @import 'variables';
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
+// Reset bootstrap
+@import 'reset';
 // Import all style module
 @import '~flatpickr/dist/flatpickr.min.css';
 // import sample scss with asset

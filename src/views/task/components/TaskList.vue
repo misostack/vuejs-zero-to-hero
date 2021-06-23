@@ -36,6 +36,7 @@ export default {
       validator: function (value) {
         if (!value || value.length == 0) return true;
         // else validate schema for item
+        return true;
       },
     },
   },
