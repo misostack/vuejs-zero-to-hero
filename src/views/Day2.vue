@@ -6,10 +6,10 @@
 </template>
 
 <script>
-import Task from './task/Task.vue';
+import Tasks from './task/Tasks.vue';
 export default {
   components: {
-    Task,
+    Tasks,
   },
 };
 </script>
