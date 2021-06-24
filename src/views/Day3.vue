@@ -37,7 +37,7 @@
                   <td>Actions</td>
                 </tr>
               </thead>
-              <draggable v-model="customers" tag="tbody">
+              <draggable @change="change" v-model="customers" tag="tbody">
                 <tr v-for="(customer, cid) in customers" :key="cid">
                   <td>{{ customer.id }}</td>
                   <td>{{ getFullName(customer) }}</td>
@@ -65,33 +65,35 @@ export default {
     getFullName(customer) {
       return `${customer.lastName} + ${customer.middleName} + ${customer.firstName}`;
     },
+    change(moved) {
+      const { element, newIndex, oldIndex } = moved;
+      console.error(element, newIndex, oldIndex);
+    },
   },
-  // computed: {
-  //   sortCustomers: {
-  //     get() {
-  //       return this.customers.map((c) => c).sort((a, b) => a.order - b.order);
-  //     },
-  //     set(value) {
-  //       this.customers = value;
-  //       console.log(this.customers[0].id, '---', value[0].id);
-  //       this.$forceUpdate();
-  //     },
-  //   },
-  // },
-
+  watch: {
+    customers: function (value, oldValue) {
+      console.error(
+        `${value[0].id}(${value[0].order})`,
+        ' compare to ',
+        `${oldValue[0].id}(${oldValue[0].order})`,
+      );
+    },
+  },
   data: function () {
     let customers = Array.from(new Array(10));
-    customers = customers.map((_, id) => {
-      const names = randomName();
-      return {
-        id: Math.max(1, randomIntNumber(customers.length)),
-        firstName: names.firstName,
-        middleName: names.middleName,
-        lastName: names.lastName,
-        email: `customer${id.toString().padStart(2, '0')}@yopmail.com`,
-        order: id,
-      };
-    });
+    customers = customers
+      .map((_, id) => {
+        const names = randomName();
+        return {
+          id: Math.max(1, randomIntNumber(customers.length)),
+          firstName: names.firstName,
+          middleName: names.middleName,
+          lastName: names.lastName,
+          email: `customer${id.toString().padStart(2, '0')}@yopmail.com`,
+          order: id,
+        };
+      })
+      .sort((a, b) => a.order - b.order);
     return {
       customers,
     };
