@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Day2 : Component, shared Components</h1>
-    <Task></Task>
+    <Tasks></Tasks>
   </div>
 </template>
 
