@@ -57,6 +57,34 @@
 <script>
 import draggable from 'vuedraggable';
 import { randomName, randomIntNumber } from '@/shared';
+// internal helpers
+const swapOrder = (a, b) => {
+  let tmp = a.order;
+  a.order = b.order;
+  b.order = tmp;
+};
+const arrageOrderASC = (arr, oldIndex, newIndex) => {
+  // swap index for range inside oldIndex,newIndex
+  for (let i = newIndex - 1; i > oldIndex; i--) {
+    swapOrder(arr[i], arr[i - 1]);
+  }
+  // final step
+  swapOrder(arr[oldIndex], arr[newIndex]);
+};
+const arrageOrderDESC = (arr, oldIndex, newIndex) => {
+  // swap index for range inside oldIndex,newIndex
+  for (let i = newIndex + 1; i < oldIndex; i++) {
+    swapOrder(arr[i], arr[i + 1]);
+  }
+  // final step
+  swapOrder(arr[oldIndex], arr[newIndex]);
+};
+const arrangeOrder = (arr, oldIndex, newIndex) => {
+  return oldIndex < newIndex
+    ? arrageOrderASC(arr, oldIndex, newIndex)
+    : arrageOrderDESC(arr, oldIndex, newIndex);
+};
+
 export default {
   components: {
     draggable,
@@ -65,9 +93,10 @@ export default {
     getFullName(customer) {
       return `${customer.lastName} + ${customer.middleName} + ${customer.firstName}`;
     },
-    change(moved) {
-      const { element, newIndex, oldIndex } = moved;
-      console.error(element, newIndex, oldIndex);
+    change(c) {
+      const { element, oldIndex, newIndex } = c.moved;
+      console.log(element, oldIndex, newIndex);
+      arrangeOrder(this.customers, oldIndex, newIndex);
     },
   },
   watch: {
