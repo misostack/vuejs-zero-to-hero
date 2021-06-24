@@ -119,7 +119,7 @@ export default {
           middleName: names.middleName,
           lastName: names.lastName,
           email: `customer${id.toString().padStart(2, '0')}@yopmail.com`,
-          order: id,
+          order: 5 + id * 2,
         };
       })
       .sort((a, b) => a.order - b.order);
