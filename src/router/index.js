@@ -3,12 +3,23 @@ import VueRouter from 'vue-router';
 import Day1 from '@/views/Day1.vue';
 import Day2 from '@/views/Day2.vue';
 import Day3 from '@/views/Day3.vue';
+import Day4 from '@/views/Day4.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
+    name: 'Day4',
+    component: Day4,
+  },
+  {
+    path: '/day4',
+    name: 'Day4',
+    component: Day3,
+  },
+  {
+    path: '/day3',
     name: 'Day3',
     component: Day3,
   },
