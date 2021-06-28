@@ -24,6 +24,9 @@ Vue.component('app-loading', AppLoading);
 Vue.component('app-language', AppLanguage);
 Vue.use(Fragment.Plugin);
 
+// Globally register all `_base`-prefixed components
+import './components/_globals';
+
 new Vue({
   router,
   store,

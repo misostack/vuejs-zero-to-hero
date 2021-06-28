@@ -5,7 +5,15 @@
     </div>
     <div class="row">
       <div class="col">
-        <div class="alert alert-primary" role="alert">
+        <div class="alert alert-danger" role="alert">
+          <p>{{ 'ValidationStatus:' + v$.user.$error }}</p>
+          <p v-for="error of v$.$errors" :key="error.$uid">
+            <strong>{{ error.$validator }}</strong>
+            <small> on property</small>
+            <strong>{{ error.$property }}</strong>
+            <small> says:</small>
+            <strong>{{ error.$message }}</strong>
+          </p>
           <p>{{ JSON.stringify(user) }}</p>
           <p>Agree : {{ agreeStatus }}</p>
         </div>
@@ -30,57 +38,28 @@
             </div>
             <form class="row g-3 needs-validation" @submit.prevent="_onSubmit">
               <div class="col-md-4">
-                <label
-                  for="validationCustom01"
-                  class="form-label"
-                  v-bind:class="{
-                    'is-invalid': v$.user.firstName.$errors.length,
-                  }"
-                  >{{ $t('day4.form.firstName') }}</label
-                >
-                <input
+                <BaseInputText
                   type="text"
-                  class="form-control"
-                  id="validationCustom01"
-                  v-bind:class="{
-                    'is-invalid': v$.user.firstName.$errors.length,
-                  }"
+                  :input$="v$.user.firstName"
+                  :label="'day4.form.firstName'"
                   v-model.trim.lazy="user.firstName"
                 />
-                <div
-                  class="invalid-feedback"
-                  v-if="v$.user.firstName.$errors.length"
-                >
-                  {{ v$.user.firstName.$errors[0].$message }}
-                </div>
               </div>
               <div class="col-md-4">
-                <label for="validationCustom02" class="form-label"
-                  >Last name</label
-                >
-                <input
+                <BaseInputText
                   type="text"
-                  class="form-control"
-                  id="validationCustom02"
+                  :input$="v$.user.lastName"
+                  :label="'day4.form.lastName'"
                   v-model.trim.lazy="user.lastName"
                 />
-                <div class="valid-feedback">Looks good!</div>
               </div>
               <div class="col-md-4">
-                <label for="validationCustomUsername" class="form-label"
-                  >Username</label
-                >
-                <div class="input-group">
-                  <span class="input-group-text" id="inputGroupPrepend">@</span>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="validationCustomUsername"
-                    v-model.trim.lazy="user.username"
-                    aria-describedby="inputGroupPrepend"
-                  />
-                  <div class="invalid-feedback">Please choose a username.</div>
-                </div>
+                <BaseInputText
+                  type="text"
+                  :input$="v$.user.userName"
+                  :label="'day4.form.userName'"
+                  v-model.trim.lazy="user.userName"
+                />
               </div>
               <div class="col-md-4">
                 <label for="validationCustom03" class="form-label">City</label>
@@ -159,7 +138,7 @@
                   >Phone Country Code</label
                 >
                 <v-select
-                  v-model="user.countryCode"
+                  v-model="user.phoneCountryCode"
                   label="name"
                   :options="countryCodes"
                 >
@@ -192,6 +171,14 @@
                   />
                   <div class="invalid-feedback">Please enter phone number.</div>
                 </div>
+              </div>
+              <div class="col-12">
+                <BaseInputText
+                  type="text"
+                  :input$="v$.user.address"
+                  :label="'day4.form.address'"
+                  v-model.trim.lazy="user.address"
+                />
               </div>
               <div class="col-12">
                 <div class="form-check">
@@ -243,7 +230,7 @@ export default {
         districtId: { required },
         yardId: { required },
         address: { required },
-        languages: [],
+        languages: {},
         phoneCountryCode: { required },
         phoneNumber: { required },
       },
@@ -293,6 +280,7 @@ export default {
       // e.preventDefault();
       this.v$.$touch();
       if (this.v$.$error) return;
+      alert(JSON.stringify(this.user));
     },
     _cityChanges: async function (val) {
       this.showLoading();

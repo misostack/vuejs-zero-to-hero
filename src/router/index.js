@@ -17,7 +17,7 @@ const routes = [
   {
     path: '/day4',
     name: 'Day4',
-    component: Day3,
+    component: Day4,
   },
   {
     path: '/day3',
