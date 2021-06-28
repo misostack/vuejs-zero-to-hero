@@ -4,6 +4,7 @@ import Day1 from '@/views/Day1.vue';
 import Day2 from '@/views/Day2.vue';
 import Day3 from '@/views/Day3.vue';
 import Day4 from '@/views/Day4.vue';
+import { loadLanguageAsync } from '@/i18n-setup';
 
 Vue.use(VueRouter);
 
@@ -48,6 +49,12 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+// router.js
+router.beforeEach((to, from, next) => {
+  const lang = to.params.lang || 'en';
+  loadLanguageAsync(lang).then(() => next());
 });
 
 export default router;

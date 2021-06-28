@@ -1269,5 +1269,14 @@
     "name":"Zimbabwe",
     "value":"+263"
   }
+],
+"languages": [
+  {
+	"id":"en",
+	"messages": {
+		"app.title": "VueJS from 0 to Hero",
+		"day4.form.firstName": "first name"
+	}
+  }
 ]
 }

@@ -6,6 +6,7 @@ import AppLoading from '@/views/layouts/AppLoading.vue';
 import vSelect from 'vue-select';
 import router from './router';
 import store from './store';
+import { i18n } from './i18n-setup';
 
 Vue.config.productionTip = false;
 vSelect.props.components.default = () => ({
@@ -24,5 +25,6 @@ Vue.use(Fragment.Plugin);
 new Vue({
   router,
   store,
+  i18n,
   render: (h) => h(App),
 }).$mount('#app');

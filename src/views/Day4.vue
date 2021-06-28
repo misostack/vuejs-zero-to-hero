@@ -20,9 +20,14 @@
               Some quick example text to build on the card title and make up the
               bulk of the card's content.
             </p>
-            <p>
-              <textarea :value="JSON.stringify(v$)"></textarea>
-            </p>
+            <div class="row">
+              <div class="col">
+                <textarea
+                  class="form-control"
+                  :value="JSON.stringify(v$)"
+                ></textarea>
+              </div>
+            </div>
             <form class="row g-3 needs-validation" @submit.prevent="_onSubmit">
               <div class="col-md-4">
                 <label

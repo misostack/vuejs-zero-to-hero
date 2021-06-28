@@ -23,6 +23,7 @@
     "qs": "^6.10.1",
     "vue": "^2.6.11",
     "vue-fragment": "^1.5.2",
+    "vue-i18n": "^8.24.5",
     "vue-loading-overlay": "^3.0",
     "vue-router": "^3.2.0",
     "vue-select": "^3.11.2",

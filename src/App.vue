@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <h1>{{ $t('app.title') }}</h1>
     <div id="nav">
       <router-link to="/">Today</router-link> |
       <router-link to="/day1">Day1</router-link> |
