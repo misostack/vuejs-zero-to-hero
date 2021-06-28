@@ -25,7 +25,7 @@ export function loadLanguageAsync(lang) {
     return Promise.resolve();
   }
   return axios
-    .get(`${process.env.VUE_APP_API}/languages/${lang}`)
+    .get(`${process.env.VUE_APP_API}/translations/${lang}`)
     .then((response) => {
       const { data } = response;
       if (data) {

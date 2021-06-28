@@ -3,6 +3,7 @@ import App from './App.vue';
 import Fragment from 'vue-fragment';
 import AppHeader from '@/views/layouts/AppHeader.vue';
 import AppLoading from '@/views/layouts/AppLoading.vue';
+import AppLanguage from '@/views/layouts/AppLanguage.vue';
 import vSelect from 'vue-select';
 import router from './router';
 import store from './store';
@@ -20,6 +21,7 @@ vSelect.props.components.default = () => ({
 Vue.component('v-select', vSelect);
 Vue.component('app-header', AppHeader);
 Vue.component('app-loading', AppLoading);
+Vue.component('app-language', AppLanguage);
 Vue.use(Fragment.Plugin);
 
 new Vue({

@@ -36,7 +36,7 @@
                   v-bind:class="{
                     'is-invalid': v$.user.firstName.$errors.length,
                   }"
-                  >First name</label
+                  >{{ $t('day4.form.firstName') }}</label
                 >
                 <input
                   type="text"

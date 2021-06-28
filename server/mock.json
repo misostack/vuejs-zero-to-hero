@@ -1270,13 +1270,20 @@
     "value":"+263"
   }
 ],
-"languages": [
+"translations": [
   {
 	"id":"en",
 	"messages": {
 		"app.title": "VueJS from 0 to Hero",
 		"day4.form.firstName": "first name"
 	}
-  }
+  },
+  {
+	"id":"vn",
+	"messages": {
+		"app.title": "VueJS từ gà đến cao thủ",
+		"day4.form.firstName": "Tên"
+	}
+  }  
 ]
 }
