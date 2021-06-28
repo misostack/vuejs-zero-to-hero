@@ -118,6 +118,24 @@
                 </select>
                 <div class="invalid-feedback">Please select a valid state.</div>
               </div>
+              <div class="col-md-4">
+                <label for="validationCustom06" class="form-label"
+                  >Languages</label
+                >
+                <v-select
+                  v-model="user.languages"
+                  taggable
+                  multiple
+                  label="translated"
+                  :options="languages"
+                  @search="_onSearchLanguages"
+                >
+                  <template slot="no-options">
+                    Type to search the available languages
+                  </template>
+                </v-select>
+                <div class="invalid-feedback">Please select a valid state.</div>
+              </div>
               <div class="col-12">
                 <div class="form-check">
                   <input
@@ -152,6 +170,7 @@
 <script>
 import { Api } from '../services';
 import { mapActions } from 'vuex';
+import _ from 'lodash';
 export default {
   created: async function () {
     // call api
@@ -173,6 +192,8 @@ export default {
       cities: [],
       districts: [],
       yards: [],
+      countryCodes: [],
+      languages: [],
       user: {
         firstName: '',
         lastName: '',
@@ -181,6 +202,9 @@ export default {
         districtId: '770',
         yardId: '27139',
         address: '',
+        languages: [],
+        phoneCountryCode: '',
+        phoneNumber: '',
       },
       agreeStatus: false,
     };
@@ -252,6 +276,28 @@ export default {
       }
       // hide
       this.hideLoading();
+    },
+    _searchLanguage: _.debounce((loading, search, vm) => {
+      console.log('search', search);
+      Api.get('/languages', {
+        q: `${escape(search)}`,
+      })
+        .then(({ res, err }) => {
+          if (err) {
+            return console.error(err);
+          }
+          // else
+          vm.languages = res;
+          // hide loading
+          loading(false);
+        })
+        .catch((err) => console.error(err));
+    }, 350),
+    _onSearchLanguages(search, loading) {
+      if (search.length) {
+        loading(true);
+        this._searchLanguage(loading, search, this);
+      }
     },
   },
 };

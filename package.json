@@ -16,6 +16,7 @@
     "bootstrap": "^5.0.1",
     "core-js": "^3.6.5",
     "flatpickr": "^4.6.9",
+    "lodash": "^4.17.21",
     "qs": "^6.10.1",
     "vue": "^2.6.11",
     "vue-fragment": "^1.5.2",

@@ -8,6 +8,14 @@ import router from './router';
 import store from './store';
 
 Vue.config.productionTip = false;
+vSelect.props.components.default = () => ({
+  Deselect: {
+    render: (createElement) => createElement('span', '❌'),
+  },
+  OpenIndicator: {
+    render: (createElement) => createElement('span', '🔽'),
+  },
+});
 Vue.component('v-select', vSelect);
 Vue.component('app-header', AppHeader);
 Vue.component('app-loading', AppLoading);
