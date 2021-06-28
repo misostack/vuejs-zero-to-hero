@@ -136,6 +136,46 @@
                 </v-select>
                 <div class="invalid-feedback">Please select a valid state.</div>
               </div>
+              <div class="col-md-4">
+                <label for="validationCustom06" class="form-label"
+                  >Phone Country Code</label
+                >
+                <v-select
+                  v-model="user.countryCode"
+                  label="name"
+                  :options="countryCodes"
+                >
+                  <template slot="no-options"> No Data </template>
+                  <template v-slot:option="option">
+                    <div
+                      v-html="option.name + '(' + option.value + ')'"
+                      style="padding: 2px 0"
+                    ></div>
+                  </template>
+                  <template v-slot:selected-option="option">
+                    <div v-html="option.name + '(' + option.value + ')'"></div>
+                  </template>
+                </v-select>
+                <div class="invalid-feedback">
+                  Please select a valid country code.
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label for="validationCustomUserPhoneNumber" class="form-label"
+                  >Phone Number</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="validationCustomUserPhoneNumber"
+                    v-model.trim.lazy="user.phoneNumber"
+                    aria-describedby="inputGroupPrepend"
+                    required
+                  />
+                  <div class="invalid-feedback">Please enter phone number.</div>
+                </div>
+              </div>
               <div class="col-12">
                 <div class="form-check">
                   <input
@@ -263,11 +303,24 @@ export default {
         this.yards = res;
       }
     },
+    _fetchCountryCodes: async function () {
+      const { res, err } = await Api.get('/countrycodes');
+      if (err) {
+        console.error(err);
+        return;
+      }
+      if (res) {
+        this.countryCodes = res;
+      }
+    },
     _prepareData: async function () {
       const { cityId, districtId } = this.user;
       this.showLoading();
-      // after done
+
+      // start fetching data
       await this._fetchCities();
+      await this._fetchCountryCodes();
+
       if (cityId) {
         await this._fetchDistricts(cityId);
       }
