@@ -5,6 +5,14 @@
     </div>
     <div class="row">
       <div class="col">
+        <div class="alert alert-primary" role="alert">
+          <p>{{ JSON.stringify(user) }}</p>
+          <p>Agree : {{ agreeStatus }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Task form</h5>
@@ -21,7 +29,7 @@
                   type="text"
                   class="form-control"
                   id="validationCustom01"
-                  value="Mark"
+                  v-model.trim.lazy="user.firstName"
                   required
                 />
                 <div class="valid-feedback">Looks good!</div>
@@ -34,7 +42,7 @@
                   type="text"
                   class="form-control"
                   id="validationCustom02"
-                  value="Otto"
+                  v-model.trim.lazy="user.lastName"
                   required
                 />
                 <div class="valid-feedback">Looks good!</div>
@@ -49,23 +57,28 @@
                     type="text"
                     class="form-control"
                     id="validationCustomUsername"
+                    v-model.trim.lazy="user.username"
                     aria-describedby="inputGroupPrepend"
                     required
                   />
                   <div class="invalid-feedback">Please choose a username.</div>
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <label for="validationCustom03" class="form-label">City</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="validationCustom03"
-                  required
-                />
+                <select v-model="user.cityId" class="form-select">
+                  <option disabled value="">Please select one</option>
+                  <option
+                    v-bind:value="city.id"
+                    v-for="(city, cityIdx) in cities"
+                    :key="cityIdx"
+                  >
+                    {{ city.name }}
+                  </option>
+                </select>
                 <div class="invalid-feedback">Please provide a valid city.</div>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-4">
                 <label for="validationCustom04" class="form-label">State</label>
                 <select class="form-select" id="validationCustom04" required>
                   <option selected disabled value="">Choose...</option>
@@ -73,7 +86,7 @@
                 </select>
                 <div class="invalid-feedback">Please select a valid state.</div>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-4">
                 <label for="validationCustom05" class="form-label">Zip</label>
                 <input
                   type="text"
@@ -86,6 +99,7 @@
               <div class="col-12">
                 <div class="form-check">
                   <input
+                    v-model="agreeStatus"
                     class="form-check-input"
                     type="checkbox"
                     value=""
@@ -114,7 +128,45 @@
 </template>
 
 <script>
-export default {};
+import { Api } from '../services';
+export default {
+  created: async function () {
+    // call api
+    this._prepareData();
+  },
+  mounted: function () {},
+  data: function () {
+    return {
+      cities: [],
+      user: {
+        firstName: '',
+        lastName: '',
+        userName: '',
+        cityId: '',
+        districtId: '',
+        yardId: '',
+        address: '',
+      },
+      agreeStatus: false,
+    };
+  },
+  // methods
+  methods: {
+    _fetchCities: async function () {
+      const { res, err } = await Api.get('/cities');
+      if (err) {
+        console.error(err);
+        return;
+      }
+      if (res) {
+        this.cities = res;
+      }
+    },
+    _prepareData: async function () {
+      this._fetchCities();
+    },
+  },
+};
 </script>
 
 <style></style>
