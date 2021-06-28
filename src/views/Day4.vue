@@ -79,22 +79,44 @@
                 <div class="invalid-feedback">Please provide a valid city.</div>
               </div>
               <div class="col-md-4">
-                <label for="validationCustom04" class="form-label">State</label>
-                <select class="form-select" id="validationCustom04" required>
+                <label for="validationCustom04" class="form-label"
+                  >District</label
+                >
+                <select
+                  v-model="user.districtId"
+                  class="form-select"
+                  id="validationCustom04"
+                  required
+                >
                   <option selected disabled value="">Choose...</option>
-                  <option>...</option>
+                  <option
+                    v-for="(district, districtIdx) in districts"
+                    :key="districtIdx"
+                    :value="district.id"
+                  >
+                    {{ district.name }}
+                  </option>
                 </select>
                 <div class="invalid-feedback">Please select a valid state.</div>
               </div>
               <div class="col-md-4">
-                <label for="validationCustom05" class="form-label">Zip</label>
-                <input
-                  type="text"
-                  class="form-control"
+                <label for="validationCustom05" class="form-label">Yard</label>
+                <select
+                  v-model="user.yardId"
+                  class="form-select"
                   id="validationCustom05"
                   required
-                />
-                <div class="invalid-feedback">Please provide a valid zip.</div>
+                >
+                  <option selected disabled value="">Choose...</option>
+                  <option
+                    v-for="(yard, yardIdx) in yards"
+                    :key="yardIdx"
+                    :value="yard.id"
+                  >
+                    {{ yard.name }}
+                  </option>
+                </select>
+                <div class="invalid-feedback">Please select a valid state.</div>
               </div>
               <div class="col-12">
                 <div class="form-check">
@@ -129,22 +151,35 @@
 
 <script>
 import { Api } from '../services';
+import { mapActions } from 'vuex';
 export default {
   created: async function () {
     // call api
     this._prepareData();
   },
   mounted: function () {},
+  watch: {
+    'user.cityId': {
+      handler: '_cityChanges',
+      immediate: true,
+    },
+    'user.districtId': {
+      handler: '_districtChanges',
+      immediate: true,
+    },
+  },
   data: function () {
     return {
       cities: [],
+      districts: [],
+      yards: [],
       user: {
         firstName: '',
         lastName: '',
         userName: '',
-        cityId: '',
-        districtId: '',
-        yardId: '',
+        cityId: '79',
+        districtId: '770',
+        yardId: '27139',
         address: '',
       },
       agreeStatus: false,
@@ -152,6 +187,23 @@ export default {
   },
   // methods
   methods: {
+    ...mapActions('app', ['showLoading', 'hideLoading']),
+    _cityChanges: async function (val) {
+      this.showLoading();
+      await this._fetchDistricts(val);
+      // hide
+      setTimeout(() => {
+        this.hideLoading();
+      }, 500);
+    },
+    _districtChanges: async function (val) {
+      this.showLoading();
+      await this._fetchYards(val);
+      // hide
+      setTimeout(() => {
+        this.hideLoading();
+      }, 500);
+    },
     _fetchCities: async function () {
       const { res, err } = await Api.get('/cities');
       if (err) {
@@ -162,8 +214,44 @@ export default {
         this.cities = res;
       }
     },
+    _fetchDistricts: async function (city) {
+      const { res, err } = await Api.get('/districts', {
+        city,
+      });
+      if (err) {
+        console.error(err);
+        return;
+      }
+      if (res) {
+        this.districts = res;
+      }
+    },
+    _fetchYards: async function (city, district) {
+      const { res, err } = await Api.get('/yards', {
+        city,
+        district,
+      });
+      if (err) {
+        console.error(err);
+        return;
+      }
+      if (res) {
+        this.yards = res;
+      }
+    },
     _prepareData: async function () {
-      this._fetchCities();
+      const { cityId, districtId } = this.user;
+      this.showLoading();
+      // after done
+      await this._fetchCities();
+      if (cityId) {
+        await this._fetchDistricts(cityId);
+      }
+      if (cityId && districtId) {
+        await this._fetchYards(cityId, districtId);
+      }
+      // hide
+      this.hideLoading();
     },
   },
 };

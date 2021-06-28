@@ -1,16 +1,24 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue';
+import Vuex from 'vuex';
+
+import app from './modules/app';
 
 Vue.use(Vuex);
 
-const state = {
-  isLoggedIn: false,
-  user: null,
-};
+const debug = process.env.NODE_ENV !== 'production';
+
+// const state = {
+//   isLoggedIn: false,
+//   user: null,
+// };
 
 export default new Vuex.Store({
-  state,
-  mutations: {},
-  actions: {},
-  modules: {},
+  modules: {
+    app,
+  },
+  strict: debug,
+  // state,
+  // mutations: {},
+  // actions: {},
+  // modules: {},
 });

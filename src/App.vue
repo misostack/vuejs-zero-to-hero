@@ -9,6 +9,7 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view />
+    <app-loading />
   </div>
 </template>
 
