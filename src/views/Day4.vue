@@ -20,19 +20,34 @@
               Some quick example text to build on the card title and make up the
               bulk of the card's content.
             </p>
-            <form class="row g-3 needs-validation" novalidate>
+            <p>
+              <textarea :value="JSON.stringify(v$)"></textarea>
+            </p>
+            <form class="row g-3 needs-validation" @submit.prevent="_onSubmit">
               <div class="col-md-4">
-                <label for="validationCustom01" class="form-label"
+                <label
+                  for="validationCustom01"
+                  class="form-label"
+                  v-bind:class="{
+                    'is-invalid': v$.user.firstName.$errors.length,
+                  }"
                   >First name</label
                 >
                 <input
                   type="text"
                   class="form-control"
                   id="validationCustom01"
+                  v-bind:class="{
+                    'is-invalid': v$.user.firstName.$errors.length,
+                  }"
                   v-model.trim.lazy="user.firstName"
-                  required
                 />
-                <div class="valid-feedback">Looks good!</div>
+                <div
+                  class="invalid-feedback"
+                  v-if="v$.user.firstName.$errors.length"
+                >
+                  {{ v$.user.firstName.$errors[0].$message }}
+                </div>
               </div>
               <div class="col-md-4">
                 <label for="validationCustom02" class="form-label"
@@ -43,7 +58,6 @@
                   class="form-control"
                   id="validationCustom02"
                   v-model.trim.lazy="user.lastName"
-                  required
                 />
                 <div class="valid-feedback">Looks good!</div>
               </div>
@@ -59,7 +73,6 @@
                     id="validationCustomUsername"
                     v-model.trim.lazy="user.username"
                     aria-describedby="inputGroupPrepend"
-                    required
                   />
                   <div class="invalid-feedback">Please choose a username.</div>
                 </div>
@@ -171,7 +184,6 @@
                     id="validationCustomUserPhoneNumber"
                     v-model.trim.lazy="user.phoneNumber"
                     aria-describedby="inputGroupPrepend"
-                    required
                   />
                   <div class="invalid-feedback">Please enter phone number.</div>
                 </div>
@@ -184,7 +196,6 @@
                     type="checkbox"
                     value=""
                     id="invalidCheck"
-                    required
                   />
                   <label class="form-check-label" for="invalidCheck">
                     Agree to terms and conditions
@@ -211,7 +222,28 @@
 import { Api } from '../services';
 import { mapActions } from 'vuex';
 import _ from 'lodash';
+import useVuelidate from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
+
 export default {
+  name: 'Day4Page',
+  setup: () => ({ v$: useVuelidate() }),
+  validations() {
+    return {
+      user: {
+        firstName: { required },
+        lastName: { required },
+        userName: { required },
+        cityId: { required },
+        districtId: { required },
+        yardId: { required },
+        address: { required },
+        languages: [],
+        phoneCountryCode: { required },
+        phoneNumber: { required },
+      },
+    };
+  },
   created: async function () {
     // call api
     this._prepareData();
@@ -252,6 +284,11 @@ export default {
   // methods
   methods: {
     ...mapActions('app', ['showLoading', 'hideLoading']),
+    _onSubmit: async function () {
+      // e.preventDefault();
+      this.v$.$touch();
+      if (this.v$.$error) return;
+    },
     _cityChanges: async function (val) {
       this.showLoading();
       await this._fetchDistricts(val);
