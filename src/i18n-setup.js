@@ -8,6 +8,12 @@ Vue.use(VueI18n);
 export const i18n = new VueI18n({
   locale: 'en',
   fallbackLocale: 'en',
+  missing: (locale, key, vm, values) => {
+    // handle translation missing
+    if (!values[key]) {
+      return `${locale}:MISSING.${key}`;
+    }
+  },
 });
 
 const loadedLanguages = [];

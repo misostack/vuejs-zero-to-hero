@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppHeader></AppHeader>
+    <app-header></app-header>
     <main id="content">
       <h1>Ads</h1>
       <div class="ads">

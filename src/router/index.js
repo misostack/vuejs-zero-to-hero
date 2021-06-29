@@ -4,6 +4,7 @@ import Day1 from '@/views/Day1.vue';
 import Day2 from '@/views/Day2.vue';
 import Day3 from '@/views/Day3.vue';
 import Day4 from '@/views/Day4.vue';
+import Day5 from '@/views/Day5.vue';
 import { loadLanguageAsync } from '@/i18n-setup';
 
 Vue.use(VueRouter);
@@ -11,8 +12,13 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'Day4',
-    component: Day4,
+    name: 'Home',
+    component: Day5,
+  },
+  {
+    path: '/day5',
+    name: 'Day5',
+    component: Day5,
   },
   {
     path: '/day4',
