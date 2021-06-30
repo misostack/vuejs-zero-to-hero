@@ -6,15 +6,73 @@ import Day3 from '@/views/Day3.vue';
 import Day4 from '@/views/Day4.vue';
 import Day5 from '@/views/Day5.vue';
 import Day6 from '@/views/Day6.vue';
+import Day7 from '@/views/Day7.vue';
+import Day8 from '@/views/Day8.vue';
+import Day9 from '@/views/Day9.vue';
+import Day10 from '@/views/Day10.vue';
+
 import { loadLanguageAsync } from '@/i18n-setup';
 
 Vue.use(VueRouter);
+const randomContent =
+  '<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa quaerat, voluptas iusto illum rem corporis atque hic impedit, tempore, repudiandae quo. Optio ut delectus quibusdam veritatis beatae atque, mollitia minima.</p>';
+const StaticPage = {
+  template: `<div class="row"><h1>Day 7 - Static Page</h1> ${randomContent}</div>`,
+};
+const ExamplePage = {
+  template: `
+    <div class="row">
+      <div class="col-12">
+        <h1>Day7 - Example Page {{ $route.params.example_id }}</h1>        
+        <h2 v-if="$route.params.item_id">Item {{$route.params.item_id}}</h2>
+        ${randomContent}
+      </div>
+    </div>
+  `,
+};
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Day6,
+    component: Day7,
+  },
+  {
+    path: '/day10',
+    name: 'Day10',
+    component: Day10,
+  },
+  {
+    path: '/day',
+    name: 'Day9',
+    component: Day9,
+  },
+  {
+    path: '/day8',
+    name: 'Day8',
+    component: Day8,
+  },
+  {
+    path: '/day7',
+    name: 'Day7',
+    component: Day7,
+    children: [
+      {
+        path: 'static',
+        name: 'day7-static',
+        component: StaticPage,
+      },
+      {
+        path: 'examples/:example_id',
+        name: 'example.findOne',
+        component: ExamplePage,
+      },
+      {
+        path: 'examples/:example_id/items/:item_id',
+        name: 'example.item.findOne',
+        component: ExamplePage,
+      },
+    ],
   },
   {
     path: '/day6',

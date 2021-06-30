@@ -13,7 +13,7 @@
                 <label class="form-label">City</label>
                 <v-select
                   label="label"
-                  :resetOnOptionsChange="true"
+                  :resetOnOptionsChange="false"
                   :options="cityOptions"
                   :reduce="(item) => item.value"
                   v-model="form.city"
