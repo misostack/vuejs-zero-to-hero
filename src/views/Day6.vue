@@ -8,43 +8,36 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Example form with vuex</h5>
-            <p v-if="customer.count">Count : {{ customer.count }}</p>
-
             <form class="row g-3 needs-validation" novalidate>
               <div class="col-md-4">
                 <label class="form-label">City</label>
-                <v-select></v-select>
+                <v-select
+                  label="label"
+                  :resetOnOptionsChange="true"
+                  :options="cityOptions"
+                  :reduce="(item) => item.value"
+                  v-model="form.city"
+                ></v-select>
               </div>
               <div class="col-md-4">
-                <label for="validationCustom02" class="form-label"
-                  >Last name</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="validationCustom02"
-                  value="Otto"
-                  required
-                />
-                <div class="valid-feedback">Looks good!</div>
+                <label class="form-label">District</label>
+                <v-select
+                  :resetOnOptionsChange="true"
+                  :options="districtOptions"
+                  :reduce="(item) => item.value"
+                  v-model="form.district"
+                ></v-select>
               </div>
               <div class="col-md-4">
-                <label for="validationCustomUsername" class="form-label"
-                  >Username</label
-                >
-                <div class="input-group">
-                  <span class="input-group-text" id="inputGroupPrepend">@</span>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="validationCustomUsername"
-                    aria-describedby="inputGroupPrepend"
-                    required
-                  />
-                  <div class="invalid-feedback">Please choose a username.</div>
-                </div>
+                <label class="form-label">Yards</label>
+                <v-select
+                  :resetOnOptionsChange="true"
+                  :options="yardOptions"
+                  :reduce="(item) => item.value"
+                  v-model="form.yard"
+                ></v-select>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <label for="validationCustom03" class="form-label">City</label>
                 <input
                   type="text"
@@ -54,24 +47,7 @@
                 />
                 <div class="invalid-feedback">Please provide a valid city.</div>
               </div>
-              <div class="col-md-3">
-                <label for="validationCustom04" class="form-label">State</label>
-                <select class="form-select" id="validationCustom04" required>
-                  <option selected disabled value="">Choose...</option>
-                  <option>...</option>
-                </select>
-                <div class="invalid-feedback">Please select a valid state.</div>
-              </div>
-              <div class="col-md-3">
-                <label for="validationCustom05" class="form-label">Zip</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="validationCustom05"
-                  required
-                />
-                <div class="invalid-feedback">Please provide a valid zip.</div>
-              </div>
+
               <div class="col-12">
                 <div class="form-check">
                   <input
@@ -90,11 +66,7 @@
                 </div>
               </div>
               <div class="col-12">
-                <button
-                  class="btn btn-primary"
-                  type="button"
-                  v-on:click.prevent="onFetch"
-                >
+                <button class="btn btn-primary" type="button">
                   Submit form
                 </button>
               </div>
@@ -108,49 +80,75 @@
 
 <script>
 // import { Api } from '../services/api';
-import { mapState } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
   computed: {
-    ...mapState({
-      customer: (state) => state.customer,
+    ...mapState('customer', {
+      count: (state) => state.count,
     }),
+    // ...mapState('customer', {
+    //   cities: (state) => state.cities,
+    //   count: (state) => state.count,
+    // }),
+    ...mapGetters('customer', [
+      'cityOptions',
+      'districtOptions',
+      'yardOptions',
+    ]),
   },
   watch: {
-    // customer: {
-    //   handler: function (val, oldValue) {
-    //     console.error(val, oldValue);
-    //   },
-    //   deep: true,
-    // },
+    'form.city': {
+      handler: function (val) {
+        if (val) {
+          this.fetchDistricts({ city: this.form.city });
+        } else {
+          this.resetCities();
+        }
+      },
+      deep: true,
+    },
+    'form.district': {
+      handler: function (val) {
+        if (val) {
+          this.fetchYards({
+            city: this.form.city,
+            district: this.form.district,
+          });
+        } else {
+          this.resetDistricts();
+        }
+      },
+      deep: true,
+    },
   },
 
   methods: {
-    onFetch: function () {
-      this.$store.dispatch('customer/increment', { count: 10 });
-    },
+    ...mapActions('customer', [
+      'fetchCities',
+      'fetchDistricts',
+      'fetchYards',
+      'resetCities',
+      'resetDistricts',
+    ]),
   },
   data: function () {
     return {
-      // cityOptions: [],
+      form: {
+        city: null,
+        district: null,
+        yard: null,
+      },
     };
   },
-  created: async function () {
-    this.$store.subscribe((mutation) => {
-      console.error('mutation', mutation);
-      this.$forceUpdate();
-      // this.$forceUpdate();
-    });
-    // example naming
-    const Lesson = { Title: 'The Home Row Keys.' };
-    let obj = {
-      name: 'abc',
-    };
-    const { Name } = obj;
-    console.error(Lesson, Name);
-
-    this.onFetch();
+  created: function () {
+    // this.$store.subscribe((mutation) => {
+    //   console.error('mutation', mutation);
+    //   this.$forceUpdate();
+    // });
+    this.fetchCities();
   },
+  mounted: function () {},
 };
 </script>
 

@@ -1,4 +1,6 @@
 // Customers Store
+import Vue from 'vue';
+import { Api } from '../../services/api';
 import axios from 'axios';
 const states = () => ({
   count: 0,
@@ -16,41 +18,53 @@ const getters = {
   // getYardById: (state, id) => {
   //   return state.yards.find((yard) => yard.id === id);
   // },
-  // cityOptions: (state) => {
-  //   console.error('state', state.cities);
-  //   const { cities } = state;
-  //   return cities
-  //     ? cities.map((city) => {
-  //         return { value: city.id, label: city.name };
-  //       })
-  //     : [];
-  // },
-  // districtOptions: (state) => {
-  //   const { districts } = state;
-  //   return districts
-  //     ? districts.map((district) => {
-  //         return { value: district.id, label: district.name };
-  //       })
-  //     : [];
-  // },
-  // yardOptions: (state) => {
-  //   const { yards } = state;
-  //   return yards
-  //     ? state.yards.map((yard) => {
-  //         return {
-  //           value: yard.id,
-  //           label: yard.name,
-  //         };
-  //       })
-  //     : [];
-  // },
+  cityOptions: (state) => {
+    const { cities } = state;
+    return cities
+      ? cities.map((city) => {
+          return { value: city.id, label: city.name };
+        })
+      : [];
+  },
+  districtOptions: (state) => {
+    const { districts } = state;
+    return districts
+      ? districts.map((district) => {
+          return { value: district.id, label: district.name };
+        })
+      : [];
+  },
+  yardOptions: (state) => {
+    const { yards } = state;
+    return yards
+      ? state.yards.map((yard) => {
+          return {
+            value: yard.id,
+            label: yard.name,
+          };
+        })
+      : [];
+  },
 };
 
 const mutations = {
   increment(state, payload) {
-    console.error('mutation', payload);
     // `state` is the local module state
     state.count = payload.count;
+  },
+
+  setCities(state, { cities }) {
+    // basically without side effect just : state.cities = cities;
+    // trick for Vue2
+    Vue.set(state, 'cities', cities);
+  },
+
+  setDistricts(state, { districts }) {
+    Vue.set(state, 'districts', districts);
+  },
+
+  setYards(state, { yards }) {
+    Vue.set(state, 'yards', yards);
   },
 };
 const actions = {
@@ -73,6 +87,50 @@ const actions = {
   setCount({ commit }, payload) {
     // console.error('actions', 'setCount', payload);
     commit('increment', payload);
+  },
+
+  async fetchCities({ commit }) {
+    const { res, err } = await Api.get('/cities');
+
+    if (err) {
+      commit('setCities', { cities: [] });
+    } else {
+      commit('setCities', { cities: res });
+    }
+  },
+
+  async fetchDistricts({ commit }, { city }) {
+    const { res, err } = await Api.get('/districts', {
+      city,
+    });
+
+    if (err) {
+      commit('setDistricts', { districts: [] });
+    } else {
+      commit('setDistricts', { districts: res });
+    }
+  },
+
+  async fetchYards({ commit }, { city, district }) {
+    const { res, err } = await Api.get('/yards', {
+      city,
+      district,
+    });
+
+    if (err) {
+      commit('setYards', { yards: [] });
+    } else {
+      commit('setYards', { yards: res });
+    }
+  },
+
+  resetCities({ commit }) {
+    commit('setDistricts', []);
+    commit('setYards', []);
+  },
+
+  resetDistricts({ commit }) {
+    commit('setYards', []);
   },
 };
 
