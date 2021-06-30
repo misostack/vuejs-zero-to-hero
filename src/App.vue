@@ -8,6 +8,8 @@
       <router-link to="/day2">Day2</router-link> |
       <router-link to="/day3">Day3</router-link> |
       <router-link to="/day4">Day4</router-link> |
+      <router-link to="/day5">Day5</router-link> |
+      <router-link to="/day6">Day6</router-link> |
       <router-link to="/about">About</router-link>
     </div>
     <router-view />

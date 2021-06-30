@@ -13,6 +13,12 @@
           v-on:filter-change="filterChange"
         />
       </div>
+      <ul>
+        <template v-for="n in 3">
+          <li :key="n">{{ 'li' + n }}</li>
+          <li :key="(n + 3) * 3" class="divider" role="presentation"></li>
+        </template>
+      </ul>
     </div>
   </div>
 </template>
