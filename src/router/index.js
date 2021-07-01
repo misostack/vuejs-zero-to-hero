@@ -20,14 +20,59 @@ const StaticPage = {
   template: `<div class="row"><h1>Day 7 - Static Page</h1> ${randomContent}</div>`,
 };
 const ExamplePage = {
+  props: {
+    exampleId: Number,
+    itemId: Number,
+  },
+  computed: {
+    item: function () {
+      return {
+        id: this.itemId,
+        name: `Item ${this.itemId}`,
+      };
+    },
+  },
+  created: function () {
+    console.error('created:only once');
+  },
+  mounted: function () {
+    console.error('mounted:ony once');
+  },
+  watch: {
+    exampleId: function (val, oldVal) {
+      console.error(val, oldVal);
+    },
+    $route(to, from) {
+      // react to route changes...
+      console.error('from', from, 'to', to);
+    },
+  },
+
+  data: function () {
+    return {};
+  },
   template: `
     <div class="row">
       <div class="col-12">
         <h1>Day7 - Example Page {{ $route.params.example_id }}</h1>        
         <h2 v-if="$route.params.item_id">Item {{$route.params.item_id}}</h2>
         ${randomContent}
+        {{ JSON.stringify(item) }}
       </div>
     </div>
+  `,
+};
+
+const NotFound = {
+  template: `
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1>404 - Notfound</h1>
+        <p>$route.params.pathMatch : {{ $route.params.pathMatch }}</p>
+      </div>
+    </div>
+  </div>
   `,
 };
 
@@ -58,6 +103,12 @@ const routes = [
     component: Day7,
     children: [
       {
+        path: '',
+        component: {
+          template: '<h1>Day 7 - Landing Page</h1>',
+        },
+      },
+      {
         path: 'static',
         name: 'day7-static',
         component: StaticPage,
@@ -71,6 +122,18 @@ const routes = [
         path: 'examples/:example_id/items/:item_id',
         name: 'example.item.findOne',
         component: ExamplePage,
+        props: (route) => {
+          return {
+            exampleId: parseInt(route.params.example_id),
+            itemId: parseInt(route.params.item_id),
+          };
+        },
+      },
+      {
+        path: '*',
+        component: {
+          template: '<h1>Day 7 - 404 Notfound</h1>',
+        },
       },
     ],
   },
@@ -112,6 +175,10 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '@/views/About.vue'),
+  },
+  {
+    path: '*',
+    component: NotFound,
   },
 ];
 

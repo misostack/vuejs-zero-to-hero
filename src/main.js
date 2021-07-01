@@ -7,6 +7,7 @@ import AppLanguage from '@/views/layouts/AppLanguage.vue';
 import vSelect from 'vue-select';
 import router from './router';
 import store from './store';
+import Example from './plugins/example';
 import { i18n } from './i18n-setup';
 
 Vue.config.productionTip = false;
@@ -23,6 +24,7 @@ Vue.component('app-header', AppHeader);
 Vue.component('app-loading', AppLoading);
 Vue.component('app-language', AppLanguage);
 Vue.use(Fragment.Plugin);
+Vue.use(Example);
 
 // Globally register all `_base`-prefixed components
 import './components/_globals';

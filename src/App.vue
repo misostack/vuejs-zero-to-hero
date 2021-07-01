@@ -15,6 +15,7 @@
       <router-link to="/day9">Day9</router-link>
       <router-link to="/day10">Day10</router-link>
       <router-link to="/about">About</router-link>
+      <router-link to="/not-found">Not found</router-link>
     </div>
     <router-view />
     <app-loading />
