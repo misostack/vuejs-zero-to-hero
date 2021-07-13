@@ -24,3 +24,5 @@ export const randomName = () => {
     lastName,
   };
 };
+
+export const PRIORITIES = ['low', 'normal', 'high', 'urgent'];

@@ -1,4 +1,5 @@
 const Example = {};
+import { mapActions } from 'vuex';
 Example.install = function (Vue, options = {}) {
   // 1. add global method or property
   Vue.myGlobalMethod = function () {
@@ -22,6 +23,7 @@ Example.install = function (Vue, options = {}) {
     // },
     // kind of global mixin
     methods: {
+      ...mapActions('app', ['showLoading', 'hideLoading']),
       $helpText: function (helpText) {
         alert(`[HELP]: ${helpText}`);
       },

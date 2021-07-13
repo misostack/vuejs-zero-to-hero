@@ -14,6 +14,7 @@ export const i18n = new VueI18n({
       return `${locale}:MISSING.${key}`;
     }
   },
+  silentTranslationWarn: true,
 });
 
 const loadedLanguages = [];
@@ -25,20 +26,33 @@ function setI18nLanguage(lang) {
   return lang;
 }
 
+function loadLocaleMessages() {
+  const locales = require.context('@/locales', true, /[A-Za-z0-9-_,\s]+\.json$/i);
+  const messages = {};
+  locales.keys().forEach((key) => {
+    const matched = key.match(/([A-Za-z0-9-_]+)\./i);
+    if (matched && matched.length > 1) {
+      const locale = matched[1];
+      messages[locale] = locales(key);
+    }
+  });
+  return messages;
+}
+
 export function loadLanguageAsync(lang) {
   if (loadedLanguages.includes(lang)) {
     if (i18n.locale !== lang) setI18nLanguage(lang);
     return Promise.resolve();
   }
-  return axios
-    .get(`${process.env.VUE_APP_API}/translations/${lang}`)
-    .then((response) => {
-      const { data } = response;
-      if (data) {
-        let messages = data.messages || {};
-        loadedLanguages.push(lang);
-        i18n.setLocaleMessage(lang, messages);
-        setI18nLanguage(lang);
-      }
-    });
+  return axios.get(`${process.env.VUE_APP_API}/translations/${lang}`).then((response) => {
+    const { data } = response;
+    if (data) {
+      const localMessages = loadLocaleMessages();
+      let messages = data.messages || {};
+      messages = { ...localMessages[lang], ...messages };
+      loadedLanguages.push(lang);
+      i18n.setLocaleMessage(lang, messages);
+      setI18nLanguage(lang);
+    }
+  });
 }

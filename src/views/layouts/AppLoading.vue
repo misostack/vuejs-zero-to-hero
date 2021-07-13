@@ -1,10 +1,6 @@
 <template>
   <div class="vld-parent">
-    <loading
-      :active.sync="isLoading"
-      :can-cancel="true"
-      :is-full-page="fullPage"
-    ></loading>
+    <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
   </div>
 </template>
 
@@ -20,8 +16,9 @@ export default {
       get: function () {
         return this.$store.state.app.isLoading;
       },
-      set: function (val) {
-        this.$store.state.app.isLoading = val;
+      set: function (isLoading) {
+        this.$store.commit('app/toggleLoading', { isLoading });
+        // this.$store.state.app.isLoading = val;
       },
     },
   },

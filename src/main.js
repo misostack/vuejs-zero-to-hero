@@ -9,6 +9,9 @@ import router from './router';
 import store from './store';
 import Example from './plugins/example';
 import { i18n } from './i18n-setup';
+// plugins
+import { ValidationProvider, ValidationObserver } from 'vee-validate';
+import './vee-validate';
 
 Vue.config.productionTip = false;
 vSelect.props.components.default = () => ({
@@ -23,6 +26,8 @@ Vue.component('v-select', vSelect);
 Vue.component('app-header', AppHeader);
 Vue.component('app-loading', AppLoading);
 Vue.component('app-language', AppLanguage);
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
 Vue.use(Fragment.Plugin);
 Vue.use(Example);
 
