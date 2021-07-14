@@ -1,6 +1,17 @@
-import { extend, configure } from 'vee-validate';
+import { extend, configure, setInteractionMode } from 'vee-validate';
 import { required, email, min, max } from 'vee-validate/dist/rules';
 // import { i18n } from './i18n-setup';
+import CustomValidators from './validators';
+// https://vee-validate.logaretm.com/v3/guide/interaction-and-ux.html#custom-modes
+setInteractionMode('custom', (context) => {
+  if (context.value === 'yes') {
+    return {
+      on: ['input'],
+    };
+  }
+
+  return { on: ['blur', 'input'] };
+});
 
 configure({
   // defaultMessage: (field, values) => {
@@ -48,9 +59,25 @@ extend('max', {
 
 extend('bad_words', {
   validate(value, args = []) {
+    console.error('bad_words');
     const BAD_WORDS = ['fuck', 'fuc', ...args.blackList];
     return !BAD_WORDS.includes(`${value}`.toLowerCase());
   },
   params: ['blackList'],
   message: `{_field_}.bad_words`,
+});
+
+extend('custom', {
+  validate(value, args) {
+    if (value) {
+      CustomValidators[args['name']](value).then(({ isValid, error }) => {
+        console.error(error);
+        return isValid;
+      });
+      return `${args['name']}`;
+    }
+    return true;
+  },
+  params: ['name'],
+  message: `{_error_}`,
 });

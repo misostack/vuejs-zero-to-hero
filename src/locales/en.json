@@ -1,4 +1,5 @@
 {
+  "example.user.lastName": "Last name",
   "example.user.firstName.required": "First name is required",
   "example.user.firstName.min": "First name min length is {min} characters",
   "example.user.firstName.max": "First name max length is {max} characters"
