@@ -80,7 +80,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Day8,
+    component: Day9,
   },
   {
     path: '/day10',
@@ -88,7 +88,7 @@ const routes = [
     component: Day10,
   },
   {
-    path: '/day',
+    path: '/day9',
     name: 'Day9',
     component: Day9,
   },

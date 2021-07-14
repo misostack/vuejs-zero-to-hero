@@ -1,0 +1,73 @@
+{
+  "page": {
+    "size": 5,
+    "totalElements": 9,
+    "totalPages": 10,
+    "number": 1
+  },
+  "items": [
+    {
+      "id": "0b7de627-2e2a-4342-809a-8757ae08a8d2",
+      "name": "Vue-Todolist - JSON Schema",
+      "status": "inprogress",
+      "pomodoros": 1,
+      "category": "training"
+    },
+    {
+      "id": "8f6e71d9-4f5e-4e23-bf4b-ecd13802be56",
+      "name": "Vue-Todolist - Define State",
+      "status": "pending",
+      "pomodoros": 1,
+      "category": "training"
+    },
+    {
+      "id": "1bb61fb1-1b0f-4212-b420-5a6dd9bbad41",
+      "name": "Vue-Todolist - Define actions, mutations",
+      "status": "pending",
+      "pomodoros": 1,
+      "category": "training"
+    },
+    {
+      "id": "b6459b41-9208-422e-ba4c-2ffd309db27c",
+      "name": "Vue-Todolist - Table Columns, Rows Data",
+      "status": "pending",
+      "pomodoros": 1,
+      "category": "training"
+    },
+    {
+      "id": "ba64505e-f65e-47e5-9e94-a478af90c79b",
+      "name": "Vue-Todolist - Form Create",
+      "status": "pending",
+      "pomodoros": 1,
+      "category": "training"
+    },
+    {
+      "id": "c0235ef6-4d8a-4b7b-b9d9-53b175f8dee8",
+      "name": "Vue-Todolist - Form Update",
+      "status": "pending",
+      "pomodoros": 1,
+      "category": "training"
+    },
+    {
+      "id": "a6acdc3b-9a73-4a90-bf3c-6773a9d70575",
+      "name": "Vue-Todolist - Create Pagination",
+      "status": "pending",
+      "pomodoros": 1,
+      "category": "training"
+    },
+    {
+      "id": "d56a5776-23c1-4cea-aeb6-7096ebf7a87e",
+      "name": "Vue-Todolist - Create Filter",
+      "status": "pending",
+      "pomodoros": 1,
+      "category": "training"
+    },
+    {
+      "id": "0aff9e44-cd6e-48ef-a563-8ebcb73b3e80",
+      "name": "Vue-Todolist - Pagination and filter changes event",
+      "status": "pending",
+      "pomodoros": 1,
+      "category": "training"
+    }
+  ]
+}

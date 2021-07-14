@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import app from './modules/app';
 import customer from './modules/customer';
+import task from './modules/task';
 
 Vue.use(Vuex);
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
   modules: {
     app,
     customer,
+    task,
   },
   strict: debug,
   // state,
