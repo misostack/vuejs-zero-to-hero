@@ -76,16 +76,35 @@ const NotFound = {
   `,
 };
 
+import Tasks from '@/views/day10/Tasks.vue';
+import TaskNew from '@/views/day10/TaskNew.vue';
+import TaskEdit from '@/views/day10/TaskEdit.vue';
+
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Day9,
+    redirect: { name: 'Day10' },
   },
   {
     path: '/day10',
     name: 'Day10',
     component: Day10,
+    children: [
+      {
+        path: 'tasks',
+        component: Tasks,
+      },
+      {
+        path: 'tasks/new',
+        component: TaskNew,
+      },
+      {
+        path: 'tasks/edit/:id',
+        component: TaskEdit,
+        props: true,
+      },
+    ],
   },
   {
     path: '/day9',

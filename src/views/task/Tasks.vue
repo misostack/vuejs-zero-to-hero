@@ -14,9 +14,7 @@
         {{ listItem }}
       </div>
       <task-list :items="items" v-if="false" />
-      <div v-for="(item, key) in items" :key="key">
-        {{ item.description }} - {{ item.status }}
-      </div>
+      <div v-for="(item, key) in items" :key="key">{{ item.description }} - {{ item.status }}</div>
     </main>
   </div>
 </template>
@@ -48,8 +46,7 @@ export default {
         this.list[0] = 'x';
         const toggleStatus = (items) => {
           const idx = items.length % 10;
-          items[idx].status =
-            items[idx].status === 'pending' ? 'done' : 'pending';
+          items[idx].status = items[idx].status === 'pending' ? 'done' : 'pending';
         };
         toggleStatus(this.items);
         console.error(this.taskSubject);

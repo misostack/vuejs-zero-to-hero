@@ -10,8 +10,7 @@
             <h5 class="card-title">Manage customers</h5>
             <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
             <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
+              Some quick example text to build on the card title and make up the bulk of the card's content.
             </p>
             b5
           </div>
@@ -24,8 +23,7 @@
           <div class="card-body">
             <h5 class="card-title">Customers</h5>
             <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
+              Some quick example text to build on the card title and make up the bulk of the card's content.
             </p>
             <table class="table">
               <thead>
@@ -80,9 +78,7 @@ const arrageOrderDESC = (arr, oldIndex, newIndex) => {
   swapOrder(arr[oldIndex], arr[newIndex]);
 };
 const arrangeOrder = (arr, oldIndex, newIndex) => {
-  return oldIndex < newIndex
-    ? arrageOrderASC(arr, oldIndex, newIndex)
-    : arrageOrderDESC(arr, oldIndex, newIndex);
+  return oldIndex < newIndex ? arrageOrderASC(arr, oldIndex, newIndex) : arrageOrderDESC(arr, oldIndex, newIndex);
 };
 
 export default {
@@ -101,11 +97,7 @@ export default {
   },
   watch: {
     customers: function (value, oldValue) {
-      console.error(
-        `${value[0].id}(${value[0].order})`,
-        ' compare to ',
-        `${oldValue[0].id}(${oldValue[0].order})`,
-      );
+      console.error(`${value[0].id}(${value[0].order})`, ' compare to ', `${oldValue[0].id}(${oldValue[0].order})`);
     },
   },
   data: function () {

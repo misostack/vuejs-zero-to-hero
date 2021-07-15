@@ -9,8 +9,7 @@ const apiInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
     common: {
-      Authorization:
-        localStorage.getItem('token') || sessionStorage.getItem('token'),
+      Authorization: localStorage.getItem('token') || sessionStorage.getItem('token'),
     },
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
@@ -27,9 +26,7 @@ export class Api {
         indices: false,
       });
       // data, status, statusText
-      const { data } = await apiInstance.get(
-        `${BASE_URL}${path}${queryParams}`,
-      );
+      const { data } = await apiInstance.get(`${BASE_URL}${path}${queryParams}`);
       return { res: data, err: null };
     } catch (err) {
       return { res: null, err };

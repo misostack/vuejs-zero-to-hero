@@ -39,36 +39,19 @@
               </div>
               <div class="col-md-4">
                 <label for="validationCustom03" class="form-label">City</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="validationCustom03"
-                  required
-                />
+                <input type="text" class="form-control" id="validationCustom03" required />
                 <div class="invalid-feedback">Please provide a valid city.</div>
               </div>
 
               <div class="col-12">
                 <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="invalidCheck"
-                    required
-                  />
-                  <label class="form-check-label" for="invalidCheck">
-                    Agree to terms and conditions
-                  </label>
-                  <div class="invalid-feedback">
-                    You must agree before submitting.
-                  </div>
+                  <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required />
+                  <label class="form-check-label" for="invalidCheck"> Agree to terms and conditions </label>
+                  <div class="invalid-feedback">You must agree before submitting.</div>
                 </div>
               </div>
               <div class="col-12">
-                <button class="btn btn-primary" type="button">
-                  Submit form
-                </button>
+                <button class="btn btn-primary" type="button">Submit form</button>
               </div>
             </form>
           </div>
@@ -91,11 +74,7 @@ export default {
     //   cities: (state) => state.cities,
     //   count: (state) => state.count,
     // }),
-    ...mapGetters('customer', [
-      'cityOptions',
-      'districtOptions',
-      'yardOptions',
-    ]),
+    ...mapGetters('customer', ['cityOptions', 'districtOptions', 'yardOptions']),
   },
   watch: {
     'form.city': {
@@ -124,13 +103,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('customer', [
-      'fetchCities',
-      'fetchDistricts',
-      'fetchYards',
-      'resetCities',
-      'resetDistricts',
-    ]),
+    ...mapActions('customer', ['fetchCities', 'fetchDistricts', 'fetchYards', 'resetCities', 'resetDistricts']),
   },
   data: function () {
     return {

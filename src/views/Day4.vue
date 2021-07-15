@@ -25,15 +25,11 @@
           <div class="card-body">
             <h5 class="card-title">Task form</h5>
             <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
+              Some quick example text to build on the card title and make up the bulk of the card's content.
             </p>
             <div class="row">
               <div class="col">
-                <textarea
-                  class="form-control"
-                  :value="JSON.stringify(v$)"
-                ></textarea>
+                <textarea class="form-control" :value="JSON.stringify(v$)"></textarea>
               </div>
             </div>
             <form class="row g-3 needs-validation" @submit.prevent="_onSubmit">
@@ -65,32 +61,17 @@
                 <label for="validationCustom03" class="form-label">City</label>
                 <select v-model="user.cityId" class="form-select">
                   <option disabled value="">Please select one</option>
-                  <option
-                    v-bind:value="city.id"
-                    v-for="(city, cityIdx) in cities"
-                    :key="cityIdx"
-                  >
+                  <option v-bind:value="city.id" v-for="(city, cityIdx) in cities" :key="cityIdx">
                     {{ city.name }}
                   </option>
                 </select>
                 <div class="invalid-feedback">Please provide a valid city.</div>
               </div>
               <div class="col-md-4">
-                <label for="validationCustom04" class="form-label"
-                  >District</label
-                >
-                <select
-                  v-model="user.districtId"
-                  class="form-select"
-                  id="validationCustom04"
-                  required
-                >
+                <label for="validationCustom04" class="form-label">District</label>
+                <select v-model="user.districtId" class="form-select" id="validationCustom04" required>
                   <option selected disabled value="">Choose...</option>
-                  <option
-                    v-for="(district, districtIdx) in districts"
-                    :key="districtIdx"
-                    :value="district.id"
-                  >
+                  <option v-for="(district, districtIdx) in districts" :key="districtIdx" :value="district.id">
                     {{ district.name }}
                   </option>
                 </select>
@@ -98,27 +79,16 @@
               </div>
               <div class="col-md-4">
                 <label for="validationCustom05" class="form-label">Yard</label>
-                <select
-                  v-model="user.yardId"
-                  class="form-select"
-                  id="validationCustom05"
-                  required
-                >
+                <select v-model="user.yardId" class="form-select" id="validationCustom05" required>
                   <option selected disabled value="">Choose...</option>
-                  <option
-                    v-for="(yard, yardIdx) in yards"
-                    :key="yardIdx"
-                    :value="yard.id"
-                  >
+                  <option v-for="(yard, yardIdx) in yards" :key="yardIdx" :value="yard.id">
                     {{ yard.name }}
                   </option>
                 </select>
                 <div class="invalid-feedback">Please select a valid state.</div>
               </div>
               <div class="col-md-4">
-                <label for="validationCustom06" class="form-label"
-                  >Languages</label
-                >
+                <label for="validationCustom06" class="form-label">Languages</label>
                 <v-select
                   v-model="user.languages"
                   taggable
@@ -127,40 +97,25 @@
                   :options="languages"
                   @search="_onSearchLanguages"
                 >
-                  <template slot="no-options">
-                    Type to search the available languages
-                  </template>
+                  <template slot="no-options"> Type to search the available languages </template>
                 </v-select>
                 <div class="invalid-feedback">Please select a valid state.</div>
               </div>
               <div class="col-md-4">
-                <label for="validationCustom06" class="form-label"
-                  >Phone Country Code</label
-                >
-                <v-select
-                  v-model="user.phoneCountryCode"
-                  label="name"
-                  :options="countryCodes"
-                >
+                <label for="validationCustom06" class="form-label">Phone Country Code</label>
+                <v-select v-model="user.phoneCountryCode" label="name" :options="countryCodes">
                   <template slot="no-options"> No Data </template>
                   <template v-slot:option="option">
-                    <div
-                      v-html="option.name + '(' + option.value + ')'"
-                      style="padding: 2px 0"
-                    ></div>
+                    <div v-html="option.name + '(' + option.value + ')'" style="padding: 2px 0"></div>
                   </template>
                   <template v-slot:selected-option="option">
                     <div v-html="option.name + '(' + option.value + ')'"></div>
                   </template>
                 </v-select>
-                <div class="invalid-feedback">
-                  Please select a valid country code.
-                </div>
+                <div class="invalid-feedback">Please select a valid country code.</div>
               </div>
               <div class="col-md-4">
-                <label for="validationCustomUserPhoneNumber" class="form-label"
-                  >Phone Number</label
-                >
+                <label for="validationCustomUserPhoneNumber" class="form-label">Phone Number</label>
                 <div class="input-group">
                   <input
                     type="text"
@@ -182,25 +137,13 @@
               </div>
               <div class="col-12">
                 <div class="form-check">
-                  <input
-                    v-model="agreeStatus"
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="invalidCheck"
-                  />
-                  <label class="form-check-label" for="invalidCheck">
-                    Agree to terms and conditions
-                  </label>
-                  <div class="invalid-feedback">
-                    You must agree before submitting.
-                  </div>
+                  <input v-model="agreeStatus" class="form-check-input" type="checkbox" value="" id="invalidCheck" />
+                  <label class="form-check-label" for="invalidCheck"> Agree to terms and conditions </label>
+                  <div class="invalid-feedback">You must agree before submitting.</div>
                 </div>
               </div>
               <div class="col-12">
-                <button class="btn btn-primary" type="submit">
-                  Submit form
-                </button>
+                <button class="btn btn-primary" type="submit">Submit form</button>
               </div>
             </form>
           </div>

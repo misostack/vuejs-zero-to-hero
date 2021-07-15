@@ -2,5 +2,14 @@
   "example.user.lastName": "Last name",
   "example.user.firstName.required": "First name is required",
   "example.user.firstName.min": "First name min length is {min} characters",
-  "example.user.firstName.max": "First name max length is {max} characters"
+  "example.user.firstName.max": "First name max length is {max} characters",
+  "task.status_enum.all": "All",
+  "task.status_enum.active": "Active",
+  "task.status_enum.inactive": "Inactive",
+  "task.fields.actions": "Actions",
+  "task.fields.id": "ID",
+  "task.fields.name": "Name",
+  "task.fields.pomodoros": "Pomodoros",
+  "task.fields.category": "Category",
+  "task.fields.status": "Status"
 }

@@ -1,13 +1,5 @@
 const firstNames = ['Vượng', 'Thảo', 'Hải', 'Linh', 'My', 'Hưng', 'Thành'];
-const middleNames = [
-  'Nhật',
-  'Thị Phương',
-  'Ngọc',
-  'Hoài',
-  'Khởi',
-  'Vĩnh',
-  'Trần',
-];
+const middleNames = ['Nhật', 'Thị Phương', 'Ngọc', 'Hoài', 'Khởi', 'Vĩnh', 'Trần'];
 const lastNames = ['Phạm', 'Nguyễn', 'Đoàn', 'Đàm', 'Đặng'];
 
 export const randomIntNumber = (max) => {

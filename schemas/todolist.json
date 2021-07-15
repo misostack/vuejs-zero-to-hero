@@ -5,6 +5,9 @@
     "totalPages": 10,
     "number": 1
   },
+  "categories": [
+    "training", "work", "health", "finance", "2minutes", "support"
+  ],
   "items": [
     {
       "id": "0b7de627-2e2a-4342-809a-8757ae08a8d2",

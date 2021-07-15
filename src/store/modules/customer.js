@@ -72,9 +72,7 @@ const actions = {
     // console.error('actions', 'increment', payload);
     // dispatch('setCount', { count: Math.floor(Math.random() * 100) });
     // commit('increment', payload);
-    const response = await axios.get(
-      'https://jsonplaceholder.typicode.com/posts',
-    );
+    const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
     // console.error('response', response);
     dispatch('setCount', { count: response.data.length });
     return new Promise((resolve) => {

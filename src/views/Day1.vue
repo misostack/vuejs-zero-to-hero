@@ -6,18 +6,8 @@
     <input v-model="selectedDate" type="text" ref="flatpickr" />
     <p class="bg-danger">SELECTED: {{ selectedDate }}</p>
     <h3>Tabs</h3>
-    <ul
-      v-if="tabs.length > 0"
-      class="nav nav-pills mb-3"
-      id="pills-tab"
-      role="tablist"
-    >
-      <li
-        v-for="tab in tabs"
-        :key="tab.name"
-        class="nav-item"
-        role="presentation"
-      >
+    <ul v-if="tabs.length > 0" class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+      <li v-for="tab in tabs" :key="tab.name" class="nav-item" role="presentation">
         <button
           class="nav-link"
           v-on:click="activeTab = tab.name"
@@ -102,11 +92,7 @@ const TabContent = Vue.component('tab-content', {
   },
   watch: {
     tabContent: function (current, prev) {
-      console.error(
-        'tab-content:tabContent',
-        `current:${current}`,
-        `prev:${prev}`,
-      );
+      console.error('tab-content:tabContent', `current:${current}`, `prev:${prev}`);
     },
   },
 });

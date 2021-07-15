@@ -12,9 +12,7 @@
       />
     </div>
     <div class="col-md-3">
-      <label for="validationCustom04" class="form-label">{{
-        $t('DAY_FILTER.CITY.LABEL')
-      }}</label>
+      <label for="validationCustom04" class="form-label">{{ $t('DAY_FILTER.CITY.LABEL') }}</label>
       <select class="form-select" v-model="filterValues.city">
         <option selected disabled value="">Choose...</option>
         <option v-for="city in cities" :value="city.id" :key="city.id">
