@@ -44,6 +44,7 @@ export default {
     }
   },
 };
+console.error('dataa');
 </script>
 
 <style></style>
