@@ -9,12 +9,13 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "prepare": "husky install"    
+    "prepare": "husky install"
   },
   "dependencies": {
     "@vue/composition-api": "^1.0.0-rc.12",
     "@vuelidate/core": "^2.0.0-alpha.19",
     "@vuelidate/validators": "^2.0.0-alpha.17",
+    "@yarnpkg/plugin-dlx": "^3.0.0-rc.9",
     "add": "^2.0.6",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.1",
