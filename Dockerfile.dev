@@ -12,7 +12,9 @@ RUN yarn install
 RUN yarn build
 
 # production stage
-FROM nginx:stable-alpine as production-stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+FROM node:14-alpine3.13 as production-stage
+WORKDIR /app 
+COPY --from=build-stage /app/dist /app/dist
+
+RUN yarn global add serve
+CMD NODE_ENV=development serve -s dist -l 17000 -p 3001

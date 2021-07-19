@@ -82,3 +82,22 @@ cp .env.sample .env.production
 5. Notification
 
 ## Advanced Level
+
+### Docker
+
+1. First time
+
+```bash
+docker build -t onlyvue:lastest .
+docker run -it -p 8080:80 --name onlyvue-local onlyvue:lastest
+```
+
+2. Next build
+
+```bash
+docker rmi onlyvue:lastest
+docker build -t onlyvue:lastest .
+docker container stop onlyvue-local
+docker container rm onlyvue-local
+docker run -it -p 8080:80 --name onlyvue-local onlyvue:lastest
+```
