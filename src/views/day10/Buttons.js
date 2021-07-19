@@ -26,3 +26,5 @@ const EditButton = {
   `,
 };
 export { EditButton };
+
+console.log('aaa');
