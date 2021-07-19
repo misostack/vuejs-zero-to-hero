@@ -44,7 +44,7 @@ export default {
     }
   },
 };
-console.error('dataa');
+console.error('data adsasda');
 </script>
 
 <style></style>
