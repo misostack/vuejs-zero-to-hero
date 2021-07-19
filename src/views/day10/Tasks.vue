@@ -1,6 +1,7 @@
 <template>
   <div id="page-tasks">
     <h4>Manage tasks</h4>
+    {{ $t('user/list/edit/firstName.e_required') }}
     {{ filter }}
     {{ tasks.length }}
     <task-filter

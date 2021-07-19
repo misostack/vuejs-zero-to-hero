@@ -11,5 +11,6 @@
   "task.fields.name": "Name",
   "task.fields.pomodoros": "Pomodoros",
   "task.fields.category": "Category",
-  "task.fields.status": "Status"
+  "task.fields.status": "Status",
+  "user/edit/firstName.e_required": "User list edit firstName error required"
 }

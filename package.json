@@ -9,7 +9,7 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "prepare": "husky install .config/husky"    
+    "prepare": "husky install"    
   },
   "dependencies": {
     "@vue/composition-api": "^1.0.0-rc.12",
