@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "set NODE_ENV=development&&vue-cli-service serve --port 3000",
+    "serve": "set NODE_ENV=development&&vue-cli-service serve --port 3015",
     "server:watch": "cd server && nodemon index.js --watch",
     "server": "cd server && node index.js",
     "build": "vue-cli-service build",
