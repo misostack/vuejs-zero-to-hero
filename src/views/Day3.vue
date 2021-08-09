@@ -35,8 +35,8 @@
                   <td>Actions</td>
                 </tr>
               </thead>
-              <draggable @change="change" v-model="customers" tag="tbody">
-                <tr v-for="(customer, cid) in customers" :key="cid">
+              <draggable @change="change" v-model="customers" tag="tbody" ghost-class="ghost">
+                <tr v-for="(customer, cid) in customers" :key="cid" style="cursor: move">
                   <td>{{ customer.id }}</td>
                   <td>{{ getFullName(customer) }}</td>
                   <td>{{ customer.email }}</td>
@@ -122,4 +122,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.ghost {
+  opacity: 0.5;
+  background: black;
+}
+</style>
+>
